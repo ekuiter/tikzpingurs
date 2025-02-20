@@ -1,0 +1,19 @@
+\documentclass[varwidth]{standalone}
+\usepackage{pgffor}
+\usepackage{tikzpingus}
+
+\begin{document}
+    \pgfmathsetseed{\number\pdfrandomseed}
+    \newcommand{\randompingu}{
+        \begin{tikzpicture}[scale=0.5]
+            \pingu[small size,
+                random from={{eye patch left}{eye patch right}{halo,halo raise=4mm}},
+                random from={{right eye color=pingu@blue}{random from={{bow tie}{gold medal}}}},
+                random from={{eyes=!random}{wings=!random}{body type=!random}{left foot=!random}{bill=!random}{hairstyle=!random}},
+                random from={{lightsaber left}{shirt}{cloak}{horse left}{laptop left}{staff left}{pride flag left}{cane left}{blush}{headphone}{conical hat}{sun glasses}{monocle right}{rook}{glasses}{crown}{hat}{cake-hat}{vr-headset}}]
+        \end{tikzpicture}
+    }
+    \foreach \m in {1,...,5}{
+        \foreach \n in {1,...,5}{\randompingu}\\
+    }
+\end{document}
