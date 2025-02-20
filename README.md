@@ -30,10 +30,10 @@ This kind of specification may even be [algebraically incomplete](https://dl.acm
 Let's fix this by ~~overengineering~~ creating a uniform random sample with [bdd4va](https://github.com/rheradio/bdd4va).
 As input, we use a penguin feature model created in [FeatureIDE](https://featureide.github.io/), which can be manually tweaked to one's liking.
 
-This requires [Docker](https://docs.docker.com/get-docker/) on an `x86_64` Linux system (which is the only kind of system that should be allowed to generate penguins).
+This requires [Docker](https://docs.docker.com/get-docker/) on an `x86_64` Linux system.
 
 ```
-# step 0 (optional): use FeatureIDE to adjust penguin.uvl,
+# step 0 (optional): use FeatureIDE to adjust penguin.uvl
 # then re-export it as penguin.xml (SXFM) and run:
 sed -i 's/(.*$//' penguin.xml
 
