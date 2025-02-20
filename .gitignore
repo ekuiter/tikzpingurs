@@ -263,3 +263,5 @@ TSWLatexianTemp*
 /sample.txt
 /tex/pingu.gen.tex
 /pingus
+*.pdf
+!/tex/grid.pdf
