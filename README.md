@@ -5,7 +5,7 @@
 Clearly, one should be able to show off the diversity of (cute) little penguins that can be typeset with [Ti*k*Zpingus](https://github.com/EagleoutIce/tikzpingus).
 Something like this:
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="./pingus-dark.svg"><img src="./pingus.svg" width="100%"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="images/pingus-dark.svg"><img src="images/pingus.svg" width="100%"></picture>
 
 But it's impossible to highlight every penguin in (potential) existence, as there are simply too many.
 To be fair and representative, we shall create a uniform random sample (URS) of penguins, hence the name.
