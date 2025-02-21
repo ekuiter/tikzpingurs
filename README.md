@@ -47,6 +47,9 @@ scripts/tikzpingurs.sh
 scripts/tikzpingurs.sh run 100
 ```
 
+This has been successfully tested on Linux and macOS.
+Generating a large sample is cheap (~ seconds), but rendering all the penguins can take a while (~ 2 seconds per penguin).
+
 ## License
 
 The source code of this project is released under the [GPL v3 license](LICENSE.txt).
