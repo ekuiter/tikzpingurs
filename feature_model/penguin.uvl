@@ -98,3 +98,19 @@ features
 					"normal size"
 					"large size"
 
+// constraints
+// 	// treat wings as atomic
+// 	"left wing none" => "right wing none"
+// 	"right wing none" => "left wing none"
+// 	"left wing normal" => "right wing normal"
+// 	"right wing normal" => "left wing normal"
+// 	"left wing wave" => "right wing wave"
+// 	"right wing wave" => "left wing wave"
+// 	"left wing raise" => "right wing raise"
+// 	"right wing raise" => "left wing raise"
+// 	"left wing grab" => "right wing grab"
+// 	"right wing grab" => "left wing grab"
+// 	"left wing shock" => "right wing shock"
+// 	"right wing shock" => "left wing shock"
+// 	"left wing hug" => "right wing hug"
+// 	"right wing hug" => "left wing hug"
