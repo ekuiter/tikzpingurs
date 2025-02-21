@@ -264,4 +264,4 @@ TSWLatexianTemp*
 /tex/pingu.gen.tex
 /pingus
 *.pdf
-!/tex/grid.pdf
+!/images/*.pdf
