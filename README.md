@@ -35,20 +35,11 @@ We can fix this by ~~overengineering~~ creating a uniform random sample with [bd
 As input, we use a penguin feature model manually created in [FeatureIDE](https://featureide.github.io/), which can be manually tweaked to one's liking.
 The feature model is based on the [documentation](https://media.githubusercontent.com/media/EagleoutIce/tikzpingus/gh-pages/doc/build/tikzpingus-doc.pdf) of tikzpingurs as of 2025/02/20.
 
-This requires [Docker](https://docs.docker.com/get-docker/) on an `x86_64` Linux system.
+This requires [Docker](https://docs.docker.com/get-docker/).
 
 ```
-# step 0 (optional): use FeatureIDE to adjust penguin.uvl
-# then re-export it as penguin.xml (SXFM) and run:
-sed -i 's/(.*$//' penguin.xml
-
-# step 1: generate a uniform random sample of penguin configurations
-export N=10
-docker build . -t tikzpingurs
-docker run --rm tikzpingurs $N | grep -v \\.$ > sample.txt
-
-# step 2: draw all the penguins in the sample into the pingus/ directory
-./draw_penguins.sh
+# step 0 (optional): use FeatureIDE to adjust penguin.uvl, then re-export it as penguin.xml (SXFM) and run:
+scripts/tikzpingurs.sh
 ```
 
 ## License

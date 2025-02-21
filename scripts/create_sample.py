@@ -24,4 +24,6 @@ features = [lreplace(lreplace(feature.strip(), ':o', ''), ':', '').strip() for f
 
 configurations = my_bdd.sample(n)
 for configuration in configurations:
-    print(', '.join([normalize_feature(feature) for feature in configuration if not feature.startswith('not ') and normalize_feature(feature) is not None]))
+    print('\\tikz{\pingu[', end='')
+    print(', '.join([normalize_feature(feature) for feature in configuration if not feature.startswith('not ') and normalize_feature(feature) is not None]), end='')
+    print(']}')

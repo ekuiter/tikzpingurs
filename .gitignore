@@ -260,8 +260,10 @@ TSWLatexianTemp*
 
 .vscode
 *.synctex.gz
-/sample.txt
+/build
 /tex/pingu.gen.tex
 /pingus
 *.pdf
 !/images/*.pdf
+*.gen.*
+/scripts/penguin.xml
