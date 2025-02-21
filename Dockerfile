@@ -12,6 +12,7 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test \
 
 WORKDIR /home
 RUN git clone https://github.com/rheradio/bdd4va \
+    && git -C bdd4va checkout 6d31aafccb7439c25807d35af083209c45d54de9 \
     && chmod +x bdd4va/bdd4va/bin/* \
     && for f in bdd4va/bdd4va/bin/*.sh; do sed -i '1s_^_#!/usr/bin/env bash\n_' $f; done \
     && python3 -mpip install ./bdd4va
