@@ -19,7 +19,7 @@ So, how to do it?
 
 ## The Sane (= Boring) Way
 
-An intuitive, but ultimately doomed-to-fail idea for sampling penguins might be to use Ti*k*Zpingus' integrated `random from` command, for example to create a [grid](tex/grid.pdf) of random penguins:
+An intuitive, but ultimately doomed-to-fail idea for sampling penguins might be to use Ti*k*Zpingus' integrated `random from` command, for example to create a [grid](paper/grid.pdf) of random penguins:
 
 ```
 \tikz\pingu[random from={{lightsaber left}{shirt}{cloak}{pride flag left}{...}}]
