@@ -13,12 +13,17 @@ initialize(arguments...) {
     "$function" "${arguments[@]:1}"
 }
 
+# re-export penguin feature model as SXFM
+transform-model() {
+    io/gradlew -q -p io shadowJar
+    java -jar "$SCRIPTS_DIRECTORY"/../io/io.jar "$SCRIPTS_DIRECTORY"/../feature_model/penguin.uvl | sed 's/(.*$//'
+}
+
 # generate a uniform random sample of penguin configurations
 create-sample(n) {
     if [[ ! -f "$SCRIPTS_DIRECTORY"/penguin.xml ]]; then
         error "Penguin feature model not generated yet."
     fi
-    sed -i 's/(.*$//' "$SCRIPTS_DIRECTORY"/penguin.xml
     docker build "$SCRIPTS_DIRECTORY" -q --platform linux/amd64 -t tikzpingurs > /dev/null
     docker run --rm --platform linux/amd64 tikzpingurs "$n" | grep -v \\.$
 }
@@ -33,7 +38,7 @@ render-penguins(sample) {
     while read -r configuration; do
         echo "Rendering penguin #$i ..."
         sed "s/#/${configuration//\\/\\\\}/" "$SCRIPTS_DIRECTORY"/template.tex > "$SCRIPTS_DIRECTORY"/template.gen.tex
-        "${latexmk[@]}" -quiet -silent -pdf -pdflatex='pdflatex -interaction=batchmode -synctex=1 -halt-on-error' template.gen.tex #>/dev/null
+        "${latexmk[@]}" -quiet -silent -pdf -pdflatex='pdflatex -interaction=batchmode -synctex=1 -halt-on-error' template.gen.tex >/dev/null
         mv "$SCRIPTS_DIRECTORY"/template.gen.pdf "$(dirname "$sample")"/$i.pdf
         "${latexmk[@]}" -quiet -silent -C template.tex >/dev/null 2>&1
         "${latexmk[@]}" -quiet -silent -C template.gen.tex >/dev/null 2>&1
@@ -42,10 +47,13 @@ render-penguins(sample) {
     done < "$sample"
 }
 
-run(n=2) {
+run(n=5) {
     rm -rf "$SCRIPTS_DIRECTORY"/../build
     mkdir -p "$SCRIPTS_DIRECTORY"/../build
+
+    transform-model > "$SCRIPTS_DIRECTORY"/penguin.xml
     create-sample "$n" > "$SCRIPTS_DIRECTORY"/../build/sample.tex
+
     render-penguins "$SCRIPTS_DIRECTORY"/../build/sample.tex
     docker run --rm -v "$PWD"/build:/work/files --platform linux/amd64 ghcr.io/bogosj/merge-pdfs
 }
