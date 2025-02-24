@@ -31,20 +31,24 @@ Thus, this won't treat every penguin equally, and we can't have that.
 
 ## The One and Only Correct Way
 
-We can fix this by ~~overengineering~~ creating a uniform random sample with [bdd4va](https://github.com/rheradio/bdd4va).
+We can fix this by ~~overengineering~~ creating a uniform random sample with [SPUR](https://github.com/ZaydH/spur).
 As input, we use a penguin feature model manually created in [FeatureIDE](https://featureide.github.io/), which can be manually tweaked to one's liking.
-The feature model is based on the [documentation](https://media.githubusercontent.com/media/EagleoutIce/tikzpingus/gh-pages/doc/build/tikzpingus-doc.pdf) of tikzpingurs as of 2025/02/20.
+The feature model is based on the [documentation](https://media.githubusercontent.com/media/EagleoutIce/tikzpingus/gh-pages/doc/build/tikzpingus-doc.pdf) of tikzpingurs.
+It can be customized to change the generated penguins (for example by adding or removing cross-tree constraints).
 
 This requires [Java](https://www.java.com/download/) and [Docker](https://docs.docker.com/get-docker/).
 
 ```
-# first, make any desire changes in penguin.uvl
+# first, make any desired changes in penguin.uvl
 
-# to generate a tiny sample, run:
+# to render a small sample with default options, run:
 scripts/tikzpingurs.sh
 
-# to specify the emphasize, run:
-scripts/tikzpingurs.sh run 100
+# to render a single penguin, run:
+scripts/tikzpingurs.sh run --n 1
+
+# to render nine penguins in three columns as well as individually, run:
+scripts/tikzpingurs.sh run --n 9 --grid 3 --each y
 ```
 
 This has been successfully tested on Linux and macOS.

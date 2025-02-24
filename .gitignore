@@ -266,4 +266,5 @@ TSWLatexianTemp*
 *.pdf
 !/images/*.pdf
 *.gen.*
-/scripts/penguin.xml
+/scripts/penguin.dimacs
+/scripts/penguin.spur

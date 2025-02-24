@@ -16,16 +16,18 @@ initialize(arguments...) {
 # re-export penguin feature model as SXFM
 transform-model() {
     io/gradlew -q -p io shadowJar
-    java -jar "$SCRIPTS_DIRECTORY"/../io/io.jar "$SCRIPTS_DIRECTORY"/../feature_model/penguin.uvl | sed 's/(.*$//'
+    java -jar "$SCRIPTS_DIRECTORY"/../io/io.jar "$SCRIPTS_DIRECTORY"/../penguin.uvl
 }
 
 # generate a uniform random sample of penguin configurations
 create-sample(n) {
-    if [[ ! -f "$SCRIPTS_DIRECTORY"/penguin.xml ]]; then
+    if [[ ! -f "$SCRIPTS_DIRECTORY"/penguin.dimacs ]]; then
         error "Penguin feature model not generated yet."
     fi
-    docker build "$SCRIPTS_DIRECTORY" -q --platform linux/amd64 -t tikzpingurs > /dev/null
-    docker run --rm --platform linux/amd64 tikzpingurs "$n" | grep -v \\.$
+    docker build "$SCRIPTS_DIRECTORY"  -q --platform linux/amd64 -t tikzpingurs_spur > /dev/null
+    docker run --rm --platform linux/amd64 -v "$PWD":/home/tikzpingurs tikzpingurs_spur \
+        spur/build/Release/spur -cnf tikzpingurs/"$SCRIPTS_DIRECTORY"/penguin.dimacs -s "$n" -out tikzpingurs/"$SCRIPTS_DIRECTORY"/penguin.spur > /dev/null
+    docker run --rm -v "$PWD":/home/ -w /home python:3 python scripts/transform_sample.py
 }
 
 render(tex, target) {
@@ -59,8 +61,7 @@ render-grid(sample, columns) {
     latexmk=(docker run --rm -v "$PWD"/scripts:/home -w /home texlive/texlive latexmk)
     cp "$SCRIPTS_DIRECTORY"/template.tex "$SCRIPTS_DIRECTORY"/template.gen.tex
     if [[ $columns -gt 0 ]]; then
-        # this is currently a hack because varwidth does not work correctly
-        sed -i "s/#options#/margin={0 0 60pt 0},varwidth/" "$SCRIPTS_DIRECTORY"/template.gen.tex
+        sed -i "s/#options#/varwidth=\\\\maxdimen/" "$SCRIPTS_DIRECTORY"/template.gen.tex
     else
         sed -i "s/#options#//" "$SCRIPTS_DIRECTORY"/template.gen.tex
     fi
@@ -76,16 +77,20 @@ render-grid(sample, columns) {
     render template.gen "$(dirname "$sample")"/grid.pdf
 }
 
-run(n=30, columns=5) {
+run(n=12, grid=4, each=) {
     rm -rf "$SCRIPTS_DIRECTORY"/../build
     mkdir -p "$SCRIPTS_DIRECTORY"/../build
 
-    transform-model > "$SCRIPTS_DIRECTORY"/penguin.xml
+    transform-model > "$SCRIPTS_DIRECTORY"/penguin.dimacs
     create-sample "$n" > "$SCRIPTS_DIRECTORY"/../build/sample.tex
 
-    # render-each "$SCRIPTS_DIRECTORY"/../build/sample.tex
-    # docker run --rm -v "$PWD"/build:/work/files --platform linux/amd64 ghcr.io/bogosj/merge-pdfs
-    # mv "$SCRIPTS_DIRECTORY"/../build/output.pdf "$SCRIPTS_DIRECTORY"/../build/all.pdf
+    if [[ -n "$each" ]]; then
+        render-each "$SCRIPTS_DIRECTORY"/../build/sample.tex
+        docker run --rm -v "$PWD"/build:/work/files --platform linux/amd64 ghcr.io/bogosj/merge-pdfs
+        mv "$SCRIPTS_DIRECTORY"/../build/output.pdf "$SCRIPTS_DIRECTORY"/../build/all.pdf
+    fi
 
-    render-grid "$SCRIPTS_DIRECTORY"/../build/sample.tex "$columns"
+    if [[ "$grid" -gt 0 ]]; then
+        render-grid "$SCRIPTS_DIRECTORY"/../build/sample.tex "$grid"
+    fi
 }

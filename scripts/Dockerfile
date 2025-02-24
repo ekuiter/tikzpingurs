@@ -2,21 +2,11 @@ FROM ubuntu:22.04
 
 RUN apt-get update && apt-get install -y \
     git \
-    python3 \
-    python3-pip \
-    software-properties-common
-RUN add-apt-repository ppa:ubuntu-toolchain-r/test \
-    && apt-get update && apt-get install -y \
-    gcc-9 \
-    libstdc++6
+    build-essential \
+    cmake \
+    libgmp-dev
 
 WORKDIR /home
-RUN git clone https://github.com/rheradio/bdd4va \
-    && git -C bdd4va checkout 6d31aafccb7439c25807d35af083209c45d54de9 \
-    && chmod +x bdd4va/bdd4va/bin/* \
-    && for f in bdd4va/bdd4va/bin/*.sh; do sed -i '1s_^_#!/usr/bin/env bash\n_' $f; done \
-    && python3 -mpip install ./bdd4va
-
-COPY create_sample.py .
-COPY penguin.xml .
-ENTRYPOINT ["python3", "create_sample.py"]
+RUN git clone https://github.com/ZaydH/spur \
+    && git -C spur checkout 58bebca5f4a2c074843d2988fa4707f836c13669 \
+    && (cd spur; ./build.sh)
