@@ -1,0 +1,334 @@
+namespace Penguin
+
+// This feature model is based on the documentation of tikzpingus as of 2025/02/24.
+// All options related to color have been ignored, so only default colors are used.
+// Also, all extras (bluely highlighted in the reference) are only included with their default options. We have to draw a line somewhere ;)
+// To avoid too many (overlapping) gadgets on a penguin, many gadgets are grouped in alternatives according to my subjective judgment.
+// Also, some groups are created to avoid false balancing of gadgets (e.g., giving left-right gadgets the same probability as others).
+
+features
+	Penguin
+		mandatory
+			Wings
+				mandatory
+					"Left Wing"
+						alternative
+							"left wing=none"
+							"left wing=normal"
+							"left wing=wave"
+							"left wing=raise"
+							"left wing=grab"
+							"left wing=shock"
+							"left wing=hug"
+					"Right Wing"
+						alternative
+							"right wing=none"
+							"right wing=normal"
+							"right wing=wave"
+							"right wing=raise"
+							"right wing=grab"
+							"right wing=shock"
+							"right wing=hug"
+			Eyes
+				mandatory
+					"Left Eye"
+						alternative
+							"left eye=none"
+							"left eye=normal"
+							"left eye=vertical"
+							"left eye=shiny"
+							"left eye=wink"
+							"left eye=shock"
+							"left eye=devil"
+							"left eye=sad"
+							"left eye=angry"
+							"left eye=hearts"
+							"left eye=critical"
+					"Right Eye"
+						alternative
+							"right eye=none"
+							"right eye=normal"
+							"right eye=vertical"
+							"right eye=shiny"
+							"right eye=wink"
+							"right eye=shock"
+							"right eye=devil"
+							"right eye=sad"
+							"right eye=angry"
+							"right eye=hearts"
+							"right eye=critical"
+			"Body Type"
+				alternative
+					"body type=none"
+					"body type=normal"
+					"body type=chubby"
+					"body type=legacy"
+					"body type=tilt-right"
+					"body type=tilt-left"
+			"Left Foot"
+				alternative
+					"left foot=none"
+					"left foot=normal"
+					"left foot=sit"
+					"left foot=simple"
+					"left foot=back"
+					"left foot=chubby"
+			"Right Foot"
+				alternative
+					"right foot=none"
+					"right foot=normal"
+					"right foot=sit"
+					"right foot=simple"
+					"right foot=back"
+					"right foot=chubby"
+			Bill
+				alternative
+					"bill=none"
+					"bill=normal"
+					"bill=foreground"
+					"bill=flat"
+					"bill=angry"
+			Hairstyle
+				alternative
+					"hairstyle=none"
+					"hairstyle=normal"
+			Styles
+				optional
+					":line"
+					":fill"
+					":ghost parts"
+					":ghost"
+					":devil"
+					":hide"
+					":back"
+			Size
+				alternative
+					"small size"
+					"normal size"
+					"large size"
+		optional
+			Glow
+				alternative
+					"glow"
+					"glow thick"
+					"glow solid"
+		mandatory
+			Extras
+				optional
+					"Head Extra"
+						alternative
+							strawhat
+							graduate
+							"head band"
+							halo
+							"space helmet"
+							mitra
+							"witch hat"
+							"conical hat"
+							cap
+							"construction helmet"
+							"Crown"
+								alternative
+									crown
+									"crown 2d"
+									"princess crown"
+							"hat"
+							"cake-hat"
+							"santa hat"
+							"wool hat"
+							"deer hat"
+							bee
+							headphone
+							"devil horns"
+							// "pumpkin-hat" // this produces a warning, but renders fine
+							// "jack o lantern" // this produces a warning, but renders fine
+							// "jack o lantern helmet" // this produces a warning, but renders fine
+							// "detective cap" // fails, as it is too new
+					"Eye Extra"
+						alternative
+							"Eye Patch"
+								alternative
+									"eye patch left"
+									"eye patch right"
+							"Monocle"
+								alternative
+									"monocle left"
+									"monocle right"
+							"Glasses"
+								alternative
+									"glasses"
+									"glasses round"
+									"sun glasses round"
+							"vr-headset"
+							"eye frame"
+					"Face Extra" // avoid false balancing
+						alternative
+							"vampire teeth"
+							blush
+							mask
+					"Chest Extra"
+						alternative
+							heart
+							tie
+							"bow tie"
+							"sheriff star"
+							medal
+							cup
+					"Outfit Extra" // avoid false balancing
+						optional
+							pants
+							belt
+							cloak
+							cape
+							shirt
+							"second shirt"
+// done until here
+					// "devil wings"
+					// rook
+					// // "on horse" // what to do with this one?
+					// // "on horse has bounding box" // what to do with this one?
+					// "santa beard"
+					// // banner // what to do with this one?
+					// "horse behind"
+// wing items
+			// "lollipop left"
+			// "lollipop right"
+			// "fish left" // fails, as it is too new
+			// "fish right" // fails, as it is too new
+			// "flower left"
+			// "flower right"
+
+			// "hand cast left" // what to do with this one?
+			// "hand cast right" // what to do with this one?
+			// "sign post left" // what to do with this one?
+			// "sign post right" // what to do with this one?
+
+			// "lightsaber left" // group these
+			// "lightsaber right"
+			// "light-staff left"
+			// "light-staff right"
+
+			// "broom left"
+			// "broom right"
+
+			// "flag left" // what to do with this one?
+			// "flag right" // what to do with this one?
+			// "german flag left" // group these
+			// "german flag right"
+			// "pride flag left"
+			// "pride flag right"
+
+			// "present left"
+			// "present right"
+
+			// "staff left" // group these
+			// "staff right"
+			// "spear left"
+			// "spear right"
+			// "cross left"
+			// "cross right"
+			// "cane left"
+			// "cane right"
+
+			// "hammer left" // group these
+			// "hammer right"
+			// "hammer left with knob"
+			// "hammer right with knob"
+
+			// "magnifier left"
+			// "magnifier right"
+			// "plank left"
+			// "plank right"
+			// "laptop left"
+			// "laptop right"
+			// "devil fork left"
+			// "devil fork right"
+			// "horse left"
+			// "horse right"
+
+			// "snowball left"
+			// "snowball right"
+
+			// "Left Wing Item"
+			// 	alternative
+			// "Right Wing Item"
+			// 	alternative
+
+// todo: change weight of some features in the sample (not every other penguins should wear a cloak) - by introducing ignored features
+// (so we get an intentionally nonuniform random sample, with weights under our control)
+// only use constraints to enable or disable features, with documentation
+
+constraints
+	// completely disable weird-looking options
+	!"left wing=none"
+	!"right wing=none"
+	!"left eye=none"
+	!"right eye=none"
+	!"body type=none"
+	!"left foot=none"
+	!"left foot=back"
+	!"right foot=none"
+	!"right foot=back"
+	!"bill=none"
+	!"bill=foreground"
+	!":line"
+	!":fill"
+	!":ghost parts"
+	!":ghost"
+	!":devil"
+	!":hide"
+	!":back"
+	!"eye frame"
+
+	// glows do not seem to be displayed correctly and sometimes produce warnings
+	!"glow"
+	!"glow thick"
+	!"glow solid"
+
+	// synchronize left and right wings
+	// "left wing none" <=> "right wing none"
+	"left wing=normal" <=> "right wing=normal"
+	"left wing=wave" <=> "right wing=wave"
+	"left wing=raise" <=> "right wing=raise"
+	"left wing=grab" <=> "right wing=grab"
+	"left wing=shock" <=> "right wing=shock"
+	"left wing=hug" <=> "right wing=hug"
+
+	// synchronize left and right eyes
+	// "left eye none" <=> "right eye none"
+	"left eye=normal" <=> "right eye=normal"
+	"left eye=vertical" <=> "right eye=vertical"
+	"left eye=shiny" <=> "right eye=shiny"
+	"left eye=wink" <=> "right eye=wink"
+	"left eye=shock" <=> "right eye=shock"
+	"left eye=devil" <=> "right eye=devil"
+	"left eye=sad" <=> "right eye=sad"
+	"left eye=angry" <=> "right eye=angry"
+	"left eye=hearts" <=> "right eye=hearts"
+	"left eye=critical" <=> "right eye=critical"
+
+	// synchronize left and right feet
+	// "left foot none" <=> "right foot none"
+	"left foot=normal" <=> "right foot=normal"
+	"left foot=sit" <=> "right foot=sit"
+	"left foot=simple" <=> "right foot=simple"
+	// "left foot=back" <=> "right foot=back"
+	"left foot=chubby" <=> "right foot=chubby"
+
+	// chubby and sitting feet look weird with a tilted body
+	("left foot=chubby" | "right foot=chubby" | "left foot=sit" | "right foot=sit") => !("body type=tilt-left" | "body type=tilt-right")
+
+	// outfit constraints
+	cloak => !belt
+	cape => !cloak
+	(belt | cloak | shirt) => !pants
+	"second shirt" => shirt
+
+	// miscellaneous constraints
+	mask => !"sheriff star"
+	("left eye=devil" | "right eye=devil") => !("sun glasses round" | "eye patch left" | "eye patch right")
+	cup => ("left wing=grab" & "right wing=grab")
+	heart => !(belt | shirt)
+
+	// emotion constraints
+	// happy eyes don't go well with angry bill etc.
