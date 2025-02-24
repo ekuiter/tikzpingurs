@@ -32,6 +32,8 @@ Thus, this won't treat every penguin equally, and we can't have that.
 ## The One and Only Correct Way
 
 We can fix this by ~~overengineering~~ creating a uniform random sample with [SPUR](https://github.com/ZaydH/spur).
+And what better project is there to showcase feature interactions, and how to handle them?
+
 As input, we use a penguin feature model manually created in [FeatureIDE](https://featureide.github.io/), which can be manually tweaked to one's liking.
 The feature model is based on the [documentation](https://media.githubusercontent.com/media/EagleoutIce/tikzpingus/gh-pages/doc/build/tikzpingus-doc.pdf) of tikzpingurs.
 It can be customized to change the generated penguins (for example by adding or removing cross-tree constraints).

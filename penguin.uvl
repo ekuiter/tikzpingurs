@@ -161,7 +161,7 @@ features
 									"sun glasses round"
 							"vr-headset"
 							"eye frame"
-					"Face Extra" // avoid false balancing
+					"Face Extra" // avoid false balancing (make choosing the extra a <50% chance)
 						alternative
 							"vampire teeth"
 							blush
@@ -190,69 +190,75 @@ features
 					// "santa beard"
 					// // banner // what to do with this one?
 					// "horse behind"
-// wing items
-			// "lollipop left"
-			// "lollipop right"
-			// "fish left" // fails, as it is too new
-			// "fish right" // fails, as it is too new
-			// "flower left"
-			// "flower right"
-
-			// "hand cast left" // what to do with this one?
-			// "hand cast right" // what to do with this one?
-			// "sign post left" // what to do with this one?
-			// "sign post right" // what to do with this one?
-
-			// "lightsaber left" // group these
-			// "lightsaber right"
-			// "light-staff left"
-			// "light-staff right"
-
-			// "broom left"
-			// "broom right"
-
-			// "flag left" // what to do with this one?
-			// "flag right" // what to do with this one?
-			// "german flag left" // group these
-			// "german flag right"
-			// "pride flag left"
-			// "pride flag right"
-
-			// "present left"
-			// "present right"
-
-			// "staff left" // group these
-			// "staff right"
-			// "spear left"
-			// "spear right"
-			// "cross left"
-			// "cross right"
-			// "cane left"
-			// "cane right"
-
-			// "hammer left" // group these
-			// "hammer right"
-			// "hammer left with knob"
-			// "hammer right with knob"
-
-			// "magnifier left"
-			// "magnifier right"
-			// "plank left"
-			// "plank right"
-			// "laptop left"
-			// "laptop right"
-			// "devil fork left"
-			// "devil fork right"
-			// "horse left"
-			// "horse right"
-
-			// "snowball left"
-			// "snowball right"
-
-			// "Left Wing Item"
-			// 	alternative
-			// "Right Wing Item"
-			// 	alternative
+		optional
+			"Left Wing Item"
+				alternative
+					"lollipop left"
+					"flower left"
+					"broom left"
+					"present left"
+					"magnifier left"
+					"plank left"
+					"laptop left"
+					"devil fork left"
+					"horse left"
+					"snowball left"
+					// "fish left" // fails, as it is too new
+					// "hand cast left" // what to do with this one?
+					// "sign post left" // what to do with this one?
+					"Left Lightsaber"
+						alternative
+							"lightsaber left"
+							"light-staff left"
+					"Left Flag"
+						alternative
+							// "flag left" // what to do with this one?
+							"german flag left"
+							"pride flag left"
+					"Left Staff"
+						alternative
+							"staff left"
+							"spear left"
+							"cross left"
+							"cane left"
+					"Left Hammer"
+						alternative
+							"hammer left"
+							"hammer left with knob"
+			"Right Wing Item"
+				alternative
+					"lollipop right"
+					"flower right"
+					"broom right"
+					"present right"
+					"magnifier right"
+					"plank right"
+					"laptop right"
+					"devil fork right"
+					"horse right"
+					"snowball right"
+					// "fish right" // fails, as it is too new
+					// "hand cast right" // what to do with this one?
+					// "sign post right" // what to do with this one?
+					"Right Lightsaber"
+						alternative
+							"lightsaber right"
+							"light-staff right"
+					"Right Flag"
+						alternative
+							// "flag right" // what to do with this one?
+							"german flag right"
+							"pride flag right"
+					"Right Staff"
+						alternative
+							"staff right"
+							"spear right"
+							"cross right"
+							"cane right"
+					"Right Hammer"
+						alternative
+							"hammer right"
+							"hammer right with knob"
 
 // todo: change weight of some features in the sample (not every other penguins should wear a cloak) - by introducing ignored features
 // (so we get an intentionally nonuniform random sample, with weights under our control)
@@ -278,7 +284,7 @@ constraints
 	!":devil"
 	!":hide"
 	!":back"
-	!"eye frame"
+	// !"eye frame"
 
 	// glows do not seem to be displayed correctly and sometimes produce warnings
 	!"glow"
@@ -315,20 +321,22 @@ constraints
 	// "left foot=back" <=> "right foot=back"
 	"left foot=chubby" <=> "right foot=chubby"
 
-	// chubby and sitting feet look weird with a tilted body
+	// some feet look weird with a tilted body
 	("left foot=chubby" | "right foot=chubby" | "left foot=sit" | "right foot=sit") => !("body type=tilt-left" | "body type=tilt-right")
 
-	// outfit constraints
-	cloak => !belt
-	cape => !cloak
-	(belt | cloak | shirt) => !pants
-	"second shirt" => shirt
+	// // outfit constraints
+	// cloak => !belt
+	// cape => !cloak
+	// (belt | cloak | shirt) => !pants
+	// "second shirt" => shirt
 
-	// miscellaneous constraints
-	mask => !"sheriff star"
-	("left eye=devil" | "right eye=devil") => !("sun glasses round" | "eye patch left" | "eye patch right")
-	cup => ("left wing=grab" & "right wing=grab")
-	heart => !(belt | shirt)
+	// // miscellaneous constraints
+	// mask => !"sheriff star"
+	// ("left eye=devil" | "right eye=devil") => !("sun glasses round" | "eye patch left" | "eye patch right")
+	// cup => ("left wing=grab" & "right wing=grab")
+	// heart => !(belt | shirt)
+	("laptop left" | "laptop right") => !("left wing=shock" | "right wing=shock")
+	(("left wing=grab" & "right wing=grab") | ("left wing=shock" & "right wing=shock")) => !("Left Wing Item" & "Right Wing Item")
 
 	// emotion constraints
 	// happy eyes don't go well with angry bill etc.
