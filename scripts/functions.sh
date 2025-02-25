@@ -31,7 +31,7 @@ create-sample(n) {
 }
 
 render(tex, target) {
-    latexmk=(docker run --rm -v "$PWD"/scripts:/home -w /home texlive/texlive latexmk)
+    latexmk=(docker run --rm -v "$PWD":/home -w /home/scripts texlive/texlive latexmk)
     "${latexmk[@]}" -quiet -silent -pdf -pdflatex='pdflatex -interaction=batchmode -halt-on-error' "$tex" >/dev/null
     mv "$SCRIPTS_DIRECTORY"/"$tex".pdf "$target"
     "${latexmk[@]}" -quiet -silent -C "$tex" >/dev/null 2>&1

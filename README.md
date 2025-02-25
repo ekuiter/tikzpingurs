@@ -41,7 +41,10 @@ It can be customized to change the generated penguins (for example by adding or 
 This requires [Java](https://www.java.com/download/) and [Docker](https://docs.docker.com/get-docker/).
 
 ```
-# first, make any desired changes in penguin.uvl
+# first, clone this repository
+git clone --recursive https://github.com/ekuiter/tikzpingurs
+cd tikzpingurs
+# now make any desired changes in penguin.uvl
 
 # to render a small sample with default options, run:
 scripts/tikzpingurs.sh

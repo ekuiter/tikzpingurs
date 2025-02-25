@@ -1,0 +1,3 @@
+[submodule "tikzpingus"]
+	path = tikzpingus
+	url = https://github.com/EagleoutIce/tikzpingus
