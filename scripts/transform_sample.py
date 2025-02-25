@@ -3,6 +3,10 @@ import random
 def lreplace(string, pattern, sub):
     return string[len(pattern):] + sub if string.startswith(pattern) else string
 
+def remove_duplicates(A):
+   [A.pop(idx) for idx, elem in enumerate(A) if A.count(elem) != 1]
+   return A
+
 def look_up_feature(c, i):
     if i not in features:
         return None
@@ -20,7 +24,9 @@ f = open(dimacs, 'r')
 lines = [' '.join(feature.strip().split(' ')[2:]) for feature in f.readlines() if feature.startswith('c ')]
 features = {}
 for i, line in enumerate(lines):
-    if line == line.lower():
+    if '#' in line:
+        line = line[:line.index('#')]
+    if line.strip() != '' and line == line.lower():
         features[i + 1] = line
 
 f = open(spur, 'r')
@@ -38,6 +44,7 @@ for line in lines:
         reading = True
 
 for configuration in configurations:
+    remove_duplicates(configuration)
     print('\\tikz{\\pingu[', end='')
     print(', '.join([feature for feature in configuration if feature is not None]), end='')
     print(']}')
