@@ -2,9 +2,12 @@ namespace Penguin
 
 // This feature model is based on the documentation of tikzpingus as of 2025/02/24.
 // All options related to color have been ignored, so only default colors are used.
-// Also, all extras (bluely highlighted in the reference) are only included with their default options. We have to draw a line somewhere ;)
+// Also, all gadgets (bluely highlighted in the reference) are only included with their default options. We have to draw a line somewhere ;)
 // To avoid too many (overlapping) gadgets on a penguin, many gadgets are grouped in alternatives according to my subjective judgment.
 // Also, some groups are created to avoid false balancing of gadgets (e.g., giving left-right gadgets the same probability as others).
+
+// todo: change weight of some features in the sample (not every other penguins should wear a cloak) - by introducing ignored features
+// (so we get an intentionally nonuniform random sample, with weights under our control)
 
 features
 	Penguin
@@ -140,10 +143,12 @@ features
 							bee
 							headphone
 							"devil horns"
-							// "pumpkin-hat" // this produces a warning, but renders fine
-							// "jack o lantern" // this produces a warning, but renders fine
-							// "jack o lantern helmet" // this produces a warning, but renders fine
-							// "detective cap" // fails, as it is too new
+							"Pumpkin"
+								alternative
+									"pumpkin-hat" // produces a warning
+									"jack o lantern" // produces a warning
+									"jack o lantern helmet" // produces a warning
+							"detective cap"
 					"Eye Extra"
 						alternative
 							"Eye Patch"
@@ -174,6 +179,7 @@ features
 							"sheriff star"
 							medal
 							cup
+							"santa beard"
 					"Outfit Extra" // avoid false balancing
 						optional
 							pants
@@ -182,14 +188,14 @@ features
 							cape
 							shirt
 							"second shirt"
-// done until here
-					// "devil wings"
-					// rook
-					// // "on horse" // what to do with this one?
-					// // "on horse has bounding box" // what to do with this one?
-					// "santa beard"
-					// // banner // what to do with this one?
-					// "horse behind"
+							rook
+					"Background Extra"
+						alternative
+							"devil wings"
+							"horse behind"
+							"on horse"
+					"on horse has bounding box"
+					banner
 		optional
 			"Left Wing Item"
 				alternative
@@ -203,16 +209,16 @@ features
 					"devil fork left"
 					"horse left"
 					"snowball left"
-					// "fish left" // fails, as it is too new
-					// "hand cast left" // what to do with this one?
-					// "sign post left" // what to do with this one?
+					"fish left" // produces a warning
+					"hand cast left"
+					"sign post left"
 					"Left Lightsaber"
 						alternative
 							"lightsaber left"
 							"light-staff left"
 					"Left Flag"
 						alternative
-							// "flag left" // what to do with this one?
+							"flag left"
 							"german flag left"
 							"pride flag left"
 					"Left Staff"
@@ -237,16 +243,16 @@ features
 					"devil fork right"
 					"horse right"
 					"snowball right"
-					// "fish right" // fails, as it is too new
-					// "hand cast right" // what to do with this one?
-					// "sign post right" // what to do with this one?
+					"fish right" // produces a warning
+					"hand cast right"
+					"sign post right"
 					"Right Lightsaber"
 						alternative
 							"lightsaber right"
 							"light-staff right"
 					"Right Flag"
 						alternative
-							// "flag right" // what to do with this one?
+							"flag right"
 							"german flag right"
 							"pride flag right"
 					"Right Staff"
@@ -259,10 +265,6 @@ features
 						alternative
 							"hammer right"
 							"hammer right with knob"
-
-// todo: change weight of some features in the sample (not every other penguins should wear a cloak) - by introducing ignored features
-// (so we get an intentionally nonuniform random sample, with weights under our control)
-// only use constraints to enable or disable features, with documentation
 
 constraints
 	// completely disable weird-looking options
@@ -284,7 +286,22 @@ constraints
 	!":devil"
 	!":hide"
 	!":back"
-	// !"eye frame"
+
+	// this is just for debugging
+	!"eye frame"
+
+	// penguins are enough for now, thank you
+	!"horse behind"
+	!"on horse"
+
+	// these require further input to look nice
+	!banner
+	!"hand cast left"
+	!"hand cast right"
+	!"sign post left"
+	!"sign post right"
+	!"flag left"
+	!"flag right"
 
 	// glows do not seem to be displayed correctly and sometimes produce warnings
 	!"glow"
@@ -292,7 +309,7 @@ constraints
 	!"glow solid"
 
 	// synchronize left and right wings
-	// "left wing none" <=> "right wing none"
+	"left wing=none" <=> "right wing=none"
 	"left wing=normal" <=> "right wing=normal"
 	"left wing=wave" <=> "right wing=wave"
 	"left wing=raise" <=> "right wing=raise"
@@ -301,7 +318,7 @@ constraints
 	"left wing=hug" <=> "right wing=hug"
 
 	// synchronize left and right eyes
-	// "left eye none" <=> "right eye none"
+	"left eye=none" <=> "right eye=none"
 	"left eye=normal" <=> "right eye=normal"
 	"left eye=vertical" <=> "right eye=vertical"
 	"left eye=shiny" <=> "right eye=shiny"
@@ -314,29 +331,30 @@ constraints
 	"left eye=critical" <=> "right eye=critical"
 
 	// synchronize left and right feet
-	// "left foot none" <=> "right foot none"
+	"left foot=none" <=> "right foot=none"
 	"left foot=normal" <=> "right foot=normal"
 	"left foot=sit" <=> "right foot=sit"
 	"left foot=simple" <=> "right foot=simple"
-	// "left foot=back" <=> "right foot=back"
+	"left foot=back" <=> "right foot=back"
 	"left foot=chubby" <=> "right foot=chubby"
 
 	// some feet look weird with a tilted body
 	("left foot=chubby" | "right foot=chubby" | "left foot=sit" | "right foot=sit") => !("body type=tilt-left" | "body type=tilt-right")
 
-	// // outfit constraints
-	// cloak => !belt
-	// cape => !cloak
-	// (belt | cloak | shirt) => !pants
-	// "second shirt" => shirt
+	// outfit constraints
+	cloak => !belt
+	cape => !cloak
+	(belt | cloak | shirt) => !pants
+	"second shirt" => shirt
+	rook => !("Head Extra" | "Chest Extra" | shirt | pants | belt | cloak | cape)
+	"devil wings" => !(("left wing=wave" & "right wing=wave") | ("left wing=raise" & "right wing=raise"))
 
-	// // miscellaneous constraints
-	// mask => !"sheriff star"
-	// ("left eye=devil" | "right eye=devil") => !("sun glasses round" | "eye patch left" | "eye patch right")
-	// cup => ("left wing=grab" & "right wing=grab")
-	// heart => !(belt | shirt)
+	// miscellaneous constraints
+	mask => !"sheriff star"
+	("left eye=devil" | "right eye=devil") => !("sun glasses round" | "eye patch left" | "eye patch right" | "jack o lantern helmet")
+	cup => ("left wing=grab" & "right wing=grab" & !"Left Wing Item" & !"Right Wing Item")
+	heart => !(belt | shirt)
 	("laptop left" | "laptop right") => !("left wing=shock" | "right wing=shock")
-	(("left wing=grab" & "right wing=grab") | ("left wing=shock" & "right wing=shock")) => !("Left Wing Item" & "Right Wing Item")
-
-	// emotion constraints
-	// happy eyes don't go well with angry bill etc.
+	(("left wing=grab" & "right wing=grab") | ("left wing=shock" & "right wing=shock")) => !(("Left Wing Item" & "Right Wing Item") | "jack o lantern helmet")
+	"jack o lantern helmet" => !mask
+	"on horse has bounding box" => "on horse"
